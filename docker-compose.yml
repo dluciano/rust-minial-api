@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  web:
+    image: rust-web
+    platform: "linux/arm64/v8"
+    container_name: rust-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platforms:
+        - "linux/amd64"
+        - "linux/arm64"
+        - "linux/arm64/v8"
+    # entrypoint: tail -f /dev/null
+    ports:
+      - "8080:80"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=80
+      # MODE must be either dev or prod
+      - MODE=prod
+      # DATABASE_URL should be created automatically when `cargo run`
+      # or `cargo build` is executed. The important thing is that the
+      # crate builds. At that point, the bash script is ran and creates
+      # the DATABASE_URL env var for you. If for whatever reason you
+      # cannot build the crate, it's probably because of this variable
+      # here. postgres://root:root@[IP Address]:5440/webservice_tutorial should be
+      # the value of the variable. You replace the [IP Address] with
+      # the output of this command: `ipconfig | grep inet`. You then
+      # should choose an ipv4 to replace the [IP Address] with. Make
+      # sure to remove the brackets too. You may have to try several
+      # different ip addresses to get this to work. You will know it's
+      # working when the crate compiles after running `cargo run`.
+      - DATABASE_URL=postgres://root:root@postgres:5432/webservice_tutorial
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=webservice_tutorial
+    ports:
+      - "5440:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./sql:/docker-entrypoint-initdb.d/sql

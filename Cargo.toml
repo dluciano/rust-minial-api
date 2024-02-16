@@ -1,0 +1,29 @@
+[package]
+name = "webapi"
+version = "1.0.3"
+edition = "2021"
+authors = ["Harrison Hemstreet <harrisonhemstreet@gmail.com>"]
+description = "Learn how to build a web api in Rust!"
+repository = "https://github.com/harrisonhemstreet/webservice_tutorial_rust"
+documentation = "https://docs.rs/crate/webservice_tutorial/latest"
+license = "MIT OR Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4.3.1"
+dotenv = "0.15.0"
+serde = { version = "1.0.160", features = ["derive"] }
+serde_json = "1.0.96"
+tokio = { version = "1.27.0", features = ["full"] }
+sqlx = { version = "0.7.1", features = [
+    "postgres",
+    "runtime-tokio",
+    "chrono",
+    "uuid",
+    "macros",
+] }
+
+[build-dependencies]
+dotenv = "0.15.0"
+sqlx-cli = { version = "0.7.3", features = ["native-tls", "postgres"] }

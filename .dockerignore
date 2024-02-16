@@ -1,0 +1,16 @@
+/target
+/.idea
+.env
+/sql
+.gitignore
+docker-compose.yml
+Dockerfile
+.dockerignore
+env.example
+get_db_url.sh
+init.sql
+README.md
+Web Service Tutorial.postman_collection.json
+.git
+.gitattributes
+.DS_Store

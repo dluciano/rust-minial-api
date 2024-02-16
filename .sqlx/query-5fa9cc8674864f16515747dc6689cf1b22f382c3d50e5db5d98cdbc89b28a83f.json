@@ -1,0 +1,76 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n        WITH new_row AS (\n            INSERT INTO blog (id, title, slug, content, image_link, thumbnail_link, featured)\n            VALUES (\n                $1, $2, $3, $4, $5, $6, $7\n            )\n            ON CONFLICT (id)\n            DO UPDATE SET\n                id = EXCLUDED.id,\n                title = EXCLUDED.title,\n                slug = EXCLUDED.slug,\n                content = EXCLUDED.content,\n                image_link = EXCLUDED.image_link,\n                thumbnail_link = EXCLUDED.thumbnail_link,\n                featured = EXCLUDED.featured,\n                edited = NOW()\n            RETURNING\n                id,\n                title,\n                slug,\n                content,\n                image_link,\n                thumbnail_link,\n                featured,\n                (\n                    trim(to_char(created, 'DD')) || ' ' ||\n                    trim(to_char(created, 'Month')) || ' ' ||\n                    trim(to_char(created, 'YYYY HH12:MI AM'))\n                ) as created,\n                (\n                    trim(to_char(edited, 'DD')) || ' ' ||\n                    trim(to_char(edited, 'Month')) || ' ' ||\n                    trim(to_char(edited, 'YYYY HH12:MI AM'))\n                ) as edited\n        )\n        SELECT\n            new_row.id,\n            new_row.title,\n            new_row.slug,\n            new_row.content,\n            new_row.image_link,\n            new_row.thumbnail_link,\n            new_row.featured,\n            new_row.created,\n            new_row.edited\n        FROM new_row\n    ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "title",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 2,
+        "name": "slug",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "content",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "image_link",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "thumbnail_link",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "featured",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 7,
+        "name": "created",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "edited",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int4",
+        "Varchar",
+        "Varchar",
+        "Text",
+        "Text",
+        "Text",
+        "Bool"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      null,
+      null
+    ]
+  },
+  "hash": "5fa9cc8674864f16515747dc6689cf1b22f382c3d50e5db5d98cdbc89b28a83f"
+}

@@ -1,0 +1,68 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            SELECT\n                id,\n                title,\n                slug,\n                content,\n                image_link,\n                thumbnail_link,\n                featured,\n                (\n                    trim(to_char(created, 'DD')) || ' ' ||\n                    trim(to_char(created, 'Month')) || ' ' ||\n                    trim(to_char(created, 'YYYY HH12:MI AM'))\n                ) as created,\n                (\n                    trim(to_char(edited, 'DD')) || ' ' ||\n                    trim(to_char(edited, 'Month')) || ' ' ||\n                    trim(to_char(edited, 'YYYY HH12:MI AM'))\n                ) as edited\n            FROM blog;\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "title",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 2,
+        "name": "slug",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "content",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "image_link",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "thumbnail_link",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "featured",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 7,
+        "name": "created",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "edited",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      null,
+      null
+    ]
+  },
+  "hash": "ab6d959fc8e0187239a8947895882bf08c70c00dbd0e54e4a55b809e1c5546e6"
+}

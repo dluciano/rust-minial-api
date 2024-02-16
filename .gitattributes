@@ -1,0 +1,14 @@
+* text=auto eol=lf
+*.rs text eol=lf whitespace=tab-in-indent,trailing-space,tabwidth=4
+*.toml text eol=lf
+*.lock text eol=lf
+*.fixed linguist-language=Rust
+*.sql text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.postman text eol=lf
+Dockerfile* text eol=lf
+docker-compose*.yml text eol=lf
+env.example text eol=lf
+.dockerignore text eol=lf
+.gitattributes text eol=lf

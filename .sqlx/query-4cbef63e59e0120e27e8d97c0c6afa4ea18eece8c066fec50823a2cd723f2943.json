@@ -1,0 +1,75 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            WITH new_row AS (\n                INSERT INTO blog\n                    (\n                        title,\n                        slug,\n                        content,\n                        image_link,\n                        thumbnail_link,\n                        featured\n                    )\n                VALUES (\n                    $1,\n                    $2,\n                    $3,\n                    $4,\n                    $5,\n                    $6\n                )\n                RETURNING\n                    id,\n                    title,\n                    slug,\n                    content,\n                    image_link,\n                    thumbnail_link,\n                    featured,\n                    (\n                        trim(to_char(created, 'DD')) || ' ' ||\n                        trim(to_char(created, 'Month')) || ' ' ||\n                        trim(to_char(created, 'YYYY HH12:MI AM'))\n                    ) as created,\n                    (\n                        trim(to_char(edited, 'DD')) || ' ' ||\n                        trim(to_char(edited, 'Month')) || ' ' ||\n                        trim(to_char(edited, 'YYYY HH12:MI AM'))\n                    ) as edited\n            )\n            SELECT\n                new_row.id,\n                new_row.title,\n                new_row.slug,\n                new_row.content,\n                new_row.image_link,\n                new_row.thumbnail_link,\n                new_row.featured,\n                new_row.created,\n                new_row.edited\n            FROM new_row\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "title",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 2,
+        "name": "slug",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "content",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "image_link",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "thumbnail_link",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "featured",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 7,
+        "name": "created",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 8,
+        "name": "edited",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Varchar",
+        "Text",
+        "Text",
+        "Text",
+        "Bool"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      null,
+      null
+    ]
+  },
+  "hash": "4cbef63e59e0120e27e8d97c0c6afa4ea18eece8c066fec50823a2cd723f2943"
+}
